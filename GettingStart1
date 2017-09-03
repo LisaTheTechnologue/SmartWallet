@@ -9,5 +9,5 @@ fun main(args:Array<String>){
     var name:String
     var category:String
     var subcategory:String
-    var spent:Int
+    var spent:Double
 }
