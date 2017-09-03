@@ -5,4 +5,16 @@ fun main(args:Array<String>){
     println("Hi, How are you today?")
     println("You bought something, eh?")
     println("Don't worry, I'll help you calculate them!")
+    
+    println("Name of item:")
+    var name = readLine()
+
+    println("Category:")
+    var category = readLine()
+
+    println("Sub-category:")
+    var subcategory = readLine()
+
+    println("Spent:")
+    var spent = readLine()!!.toDouble()
 }
