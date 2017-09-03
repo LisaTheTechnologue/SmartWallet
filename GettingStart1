@@ -1,0 +1,8 @@
+//created in IntelliJ
+//Just getting familiar with new enviroment
+
+fun main(args:Array<String>){
+    println("Hi, How are you today?")
+    println("You bought something, eh?")
+    println("Don't worry, I'll help you calculate them!")
+}
