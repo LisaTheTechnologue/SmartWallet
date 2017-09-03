@@ -6,8 +6,38 @@ fun main(args:Array<String>){
     println("You bought something, eh?")
     println("Don't worry, I'll help you calculate them!")
     
-    var name:String
-    var category:String
-    var subcategory:String
-    var spent:Double
+    //user input
+    print("Date:")
+    var date = readLine()!!.toInt()
+    print("\n")
+
+    print("Name of item:")
+    var name:String? = readLine() //can be null
+    print("\n")
+
+    print("Category:")
+    var category = readLine()
+    print("\n")
+
+    print("Sub-category:")
+    var subcategory = readLine()
+    print("\n")
+
+    print("Spent:")
+    var spent = readLine()!!.toDouble()
+    print("\n")
+
+    //app generate auto
+    var count:Int = 0 //will increment automatically
+    var itemID:String = category + subcategory + date + count.toString() //auto generate and convert "count"
+
+    //app display
+    println("ID: " + itemID)
+    println("In the day: " + date)
+    println("Name: " + name)
+    println("In category: $category - sub: $subcategory")
+    println("Amount expense: " + spent)
+
+    ++count //count = count + 1 similar to count++
+    
 }
