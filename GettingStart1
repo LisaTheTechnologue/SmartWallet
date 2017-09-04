@@ -36,8 +36,17 @@ fun main(args:Array<String>){
     }
     print("\n")
 
-    print("Spent: $")
-    var spent = readLine()!!.toDouble()
+    print("Amount: $")
+    var money = readLine()!!.toDouble()
+    var IsExpensive:Boolean = when (money) {
+        in 20..50 -> true
+        in 50.5..200.0 -> true
+        else -> false
+    }
+    var IsEarned:Boolean = when (money) {
+        !in 0..10000 -> true
+        else -> false
+    }
     print("\n")
 
     var date = Calendar.getInstance(Locale.CANADA).get(Calendar.YEAR).toString() + Calendar.getInstance(Locale.CANADA).get(Calendar.MONTH).toString() + Calendar.getInstance(Locale.CANADA).get(Calendar.DATE).toString()
