@@ -1,43 +1,62 @@
-//created in IntelliJ
-//Just getting familiar with new enviroment
+import java.util.*
 
 fun main(args:Array<String>){
     println("Hi, How are you today?")
     println("You bought something, eh?")
     println("Don't worry, I'll help you calculate them!")
-    
-    //user input
-    print("Date:")
-    var date = readLine()!!.toInt()
-    print("\n")
 
-    print("Name of item:")
+    //user input
+    print("Name of item: ")
     var name:String? = readLine() //can be null
     print("\n")
 
-    print("Category:")
-    var category = readLine()
+    print("Category: ")
+    var ctgr = readLine()
     print("\n")
 
-    print("Sub-category:")
-    var subcategory = readLine()
+    var verCtgr:Boolean = false
+    print("Sub-ctgr: ")
+    var subctgr = readLine()
+    when (ctgr){
+        "housing" -> if (subctgr == "rent" || subctgr =="mobile") {
+            verCtgr = true
+        }
+        "daily" -> if (subctgr == "weekly food" || subctgr == "salon" || subctgr =="medication" || subctgr == "drink" || subctgr == "clothing" || subctgr == "cosmetics" || subctgr == "movie" || subctgr == "kpop" || subctgr == "dine out") {
+            verCtgr = true
+        }
+        "transport" -> if (subctgr =="bus" || subctgr == "bike" || subctgr == "other") {
+            verCtgr = true
+        }
+        "academic" -> if (subctgr == "tuition" || subctgr == "book" || subctgr == "extra class") {
+            verCtgr = true
+        }
+        "work" -> if (subctgr == "part-time" || subctgr == "volunteer" || subctgr == "full-time") {
+            verCtgr = true
+        }
+    }
     print("\n")
 
-    print("Spent:")
+    print("Spent: $")
     var spent = readLine()!!.toDouble()
     print("\n")
 
+    var date = Calendar.getInstance(Locale.CANADA).get(Calendar.YEAR).toString() + Calendar.getInstance(Locale.CANADA).get(Calendar.MONTH).toString() + Calendar.getInstance(Locale.CANADA).get(Calendar.DATE).toString()
+
+
     //app generate auto
     var count:Int = 0 //will increment automatically
-    var itemID:String = category + subcategory + date + count.toString() //auto generate and convert "count"
+    var itemID:String = ctgr + subctgr + date + count.toString() //auto generate and convert "count"
 
     //app display
-    println("ID: " + itemID)
-    println("In the day: " + date)
-    println("Name: " + name)
-    println("In category: $category - sub: $subcategory")
-    println("Amount expense: " + spent)
+    if (verCtgr == true ) {
+        println("ID: " + itemID)
+        println("In the day: " + date)
+        println("Name: " + name)
+        println("In ctgr: $ctgr - sub: $subctgr")
+        println("Amount expense: " + spent)
 
-    ++count //count = count + 1 similar to count++
-    
+        ++count //count = count + 1 similar to count++
+    } else {
+        println("Please check your input in Subcategory field again!")
+    }
 }
