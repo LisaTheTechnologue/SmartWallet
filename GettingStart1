@@ -1,40 +1,56 @@
 import java.util.*
+import kotlin.collections.ArrayList
 
 fun main(args:Array<String>){
     println("Hi, How are you today?")
     println("You bought something, eh?")
     println("Don't worry, I'll help you calculate them!")
 
+    var itemFeatures = ArrayList<String>()
+
     //user input
     print("Name of item: ")
-    var name:String? = readLine() //can be null
-    print("\n")
+    var name:String = readLine()!!.toString() //can be null
+    itemFeatures.add(name)
 
-    print("Category: ")
-    var ctgr = readLine()
-    print("\n")
+    var check:Int = 1
 
-    var verCtgr:Boolean = false
-    print("Sub-ctgr: ")
-    var subctgr = readLine()
-    when (ctgr){
-        "housing" -> if (subctgr == "rent" || subctgr =="mobile") {
-            verCtgr = true
+    var ctgr:String = ""
+    var verCtgr = false
+    var subctgr:String = ""
+    while (check <= 3){
+        print("Category: ")
+        ctgr = readLine()!!.toString()
+
+        verCtgr = false
+        print("Sub-ctgr: ")
+        subctgr = readLine()!!.toString()
+        when (ctgr) {
+            "housing" -> if (subctgr == "rent" || subctgr == "mobile") {
+                verCtgr = true
+            }
+            "daily" -> if (subctgr == "weekly food" || subctgr == "salon" || subctgr == "medication" || subctgr == "drink" || subctgr == "clothing" || subctgr == "cosmetics" || subctgr == "movie" || subctgr == "kpop" || subctgr == "dine out") {
+                verCtgr = true
+            }
+            "transport" -> if (subctgr == "bus" || subctgr == "bike" || subctgr == "other") {
+                verCtgr = true
+            }
+            "academic" -> if (subctgr == "tuition" || subctgr == "book" || subctgr == "extra class") {
+                verCtgr = true
+            }
+            "work" -> if (subctgr == "part-time" || subctgr == "volunteer" || subctgr == "full-time") {
+                verCtgr = true
+            }
+            else -> println("Sorry. There is no category like this. Check spelling again. Thank you!")
         }
-        "daily" -> if (subctgr == "weekly food" || subctgr == "salon" || subctgr =="medication" || subctgr == "drink" || subctgr == "clothing" || subctgr == "cosmetics" || subctgr == "movie" || subctgr == "kpop" || subctgr == "dine out") {
-            verCtgr = true
-        }
-        "transport" -> if (subctgr =="bus" || subctgr == "bike" || subctgr == "other") {
-            verCtgr = true
-        }
-        "academic" -> if (subctgr == "tuition" || subctgr == "book" || subctgr == "extra class") {
-            verCtgr = true
-        }
-        "work" -> if (subctgr == "part-time" || subctgr == "volunteer" || subctgr == "full-time") {
-            verCtgr = true
+
+        //if eligible, add up the list and continue
+        if (verCtgr) {
+            itemFeatures.add(ctgr)
+            itemFeatures.add(subctgr)
+            break
         }
     }
-    print("\n")
 
     print("Amount: $")
     var money = readLine()!!.toDouble()
@@ -49,20 +65,24 @@ fun main(args:Array<String>){
     }
     print("\n")
 
-    var date = Calendar.getInstance(Locale.CANADA).get(Calendar.YEAR).toString() + Calendar.getInstance(Locale.CANADA).get(Calendar.MONTH).toString() + Calendar.getInstance(Locale.CANADA).get(Calendar.DATE).toString()
-
-
     //app generate auto
+    var dateYr:String = Calendar.getInstance(Locale.CANADA).get(Calendar.YEAR).toString()
+    var dateMth:String = Calendar.getInstance(Locale.CANADA).get(Calendar.MONTH).toString()
+    var dateDay:String = Calendar.getInstance(Locale.CANADA).get(Calendar.DATE).toString()
+    var date:String = dateYr.substring(3,4) + dateMth + dateDay
+    itemFeatures.add(1,date)
+
     var count:Int = 0 //will increment automatically
-    var itemID:String = ctgr + subctgr + date + count.toString() //auto generate and convert "count"
+    var itemID:String = ctgr.substring(1,3).toUpperCase() + subctgr.substring(1,3).toUpperCase() + date + count.toString() //auto generate and convert "count"
+    itemFeatures.add(1,itemID)
 
     //app display
-    if (verCtgr == true ) {
-        println("ID: " + itemID)
-        println("In the day: " + date)
-        println("Name: " + name)
-        println("In ctgr: $ctgr - sub: $subctgr")
-        println("Amount expense: " + spent)
+    if (verCtgr ) {
+        println("ID: " + itemFeatures.get(1))
+        println("In the day: " + itemFeatures.get(2))
+        println("Name: " + itemFeatures.get(3))
+        println("In ctgr: " + itemFeatures.get(4) + " - sub: " + itemFeatures.get(5))
+        println("Amount expense: " + itemFeatures.get(6))
 
         ++count //count = count + 1 similar to count++
     } else {
