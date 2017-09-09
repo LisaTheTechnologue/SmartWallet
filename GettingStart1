@@ -1,24 +1,148 @@
+import java.io.FileWriter
 import java.util.*
 import kotlin.collections.ArrayList
 
-fun main(args:Array<String>){
+var itemFeatures = ArrayList<String>()
+
+class item() {
+
+    var itemID: String? = null
+    var itemName: String? = null
+    var itemDate: String? = null
+    var itemCategory: String? = null
+    var subcategory: String? = null
+    var itemWorth: Double = 0.0
+    var itemNote: String? = null
+
+    constructor(itemID: String, itemName: String, itemDate: String, itemCategory: String,
+                subcategory: String, itemWorth: Double, itemNote: String) : this() { //call with the name before it does anything
+        println("ID: $itemID")
+        println("In the day: $itemDate")
+        println("Name: $itemName")
+        println("In ctgr: $itemCategory - sub: $subcategory")
+        println("Amount expense: $itemWorth")
+        println("Note: $itemNote")
+        this.itemID = itemID
+        this.itemName = itemName
+        this.itemDate = itemDate
+        this.itemCategory = itemCategory
+        this.subcategory = subcategory
+        this.itemWorth = itemWorth
+        this.itemNote = itemNote
+    }
+
+    constructor(itemID: String, itemName: String, itemDate: String, itemCategory: String,
+                itemWorth: Double, itemNote: String) : this() {
+        println("ID: $itemID")
+        println("In the day: $itemDate")
+        println("Name: $itemName")
+        println("In ctgr: $itemCategory")
+        println("Amount expense: $itemWorth")
+        println("Note: $itemNote")
+        this.itemID = itemID
+        this.itemName = itemName
+        this.itemDate = itemDate
+        this.itemCategory = itemCategory
+        this.itemWorth = itemWorth
+        this.itemNote = itemNote
+    }
+}
+
+interface calculate {
+    fun sum(Year: Int, Month: Int, money: Double)
+}
+
+open class calcDay() : calculate {
+    override fun sum(Year: Int, Month: Int, money: Double) {
+        var sum = 0.0
+        var count = 1
+        when (Month) {
+            1, 3, 5, 7, 9, 11 -> {
+                while (count <= 31) {
+                    sum += money
+                    count++
+                }
+            }
+            2 -> if ((Year % 2) == 0) {
+                while (count <= 29) {
+                    sum += money
+                    count++
+                }
+            } else {
+                while (count <= 28) {
+                    sum += money
+                    count++
+                }
+            }
+            else -> {
+                while (count <= 30) {
+                    sum += money
+                    count++
+                }
+            }
+        }
+    }
+}
+
+class calcTotal(Year:Int, Month:Int, moneySum:Double) : calcDay() {
+    when (Month)
+    {
+        1, 3, 5, 7, 9, 11 -> return moneySum / 31;
+        2 -> if ((Year % 2) == 0) {
+        moneySum / 28;
+    } else moneySum / 29
+        else -> moneySum / 30
+    }
+
+}
+
+class ctgMoney(money: Double) {
+    var IsEarned: Boolean = false
+
+    fun spentOrEarned(money: Double) { //inherit
+        IsEarned = money >= 0.0
+    }
+
+    fun IsExpensive(money: Double) { //inherit
+        var IsExpensive: Boolean = when (money) {
+            in 20.0..200.0 -> true
+            else -> false
+        }
+
+        if (IsEarned) {
+            println("You earned it! Congrats!")
+        } else if (IsExpensive) {
+            println("It is too expensive. girl! What have you bought? Is it necessary?")
+        }
+    }
+}
+
+
+fun WriteToFile(str:String){
+    try {
+        var fo = FileWriter("test.txt")
+        fo.write(str)
+        fo.close()
+    } catch (ex:Exception){
+        print(ex.message)
+    }
+}
+fun main(args: Array<String>) {
     println("Hi, How are you today?")
     println("You bought something, eh?")
     println("Don't worry, I'll help you calculate them!")
 
-    var itemFeatures = ArrayList<String>()
-
     //user input
     print("Name of item: ")
-    var name:String = readLine()!!.toString() //can be null
+    var name: String = readLine()!!.toString() //can be null
     itemFeatures.add(name)
 
-    var check:Int = 1
+    var check: Int = 1
 
-    var ctgr:String = ""
+    var ctgr: String = ""
     var verCtgr = false
-    var subctgr:String = ""
-    while (check <= 3){
+    var subctgr: String = ""
+    while (check <= 3) {
         print("Category: ")
         ctgr = readLine()!!.toString()
 
@@ -54,36 +178,22 @@ fun main(args:Array<String>){
 
     print("Amount: $")
     var money = readLine()!!.toDouble()
-    var IsExpensive:Boolean = when (money) {
-        in 20..50 -> true
-        in 50.5..200.0 -> true
-        else -> false
-    }
-    var IsEarned:Boolean = when (money) {
-        !in 0..10000 -> true
-        else -> false
-    }
-    print("\n")
+
 
     //app generate auto
-    var dateYr:String = Calendar.getInstance(Locale.CANADA).get(Calendar.YEAR).toString()
-    var dateMth:String = Calendar.getInstance(Locale.CANADA).get(Calendar.MONTH).toString()
-    var dateDay:String = Calendar.getInstance(Locale.CANADA).get(Calendar.DATE).toString()
-    var date:String = dateYr.substring(3,4) + dateMth + dateDay
-    itemFeatures.add(1,date)
+    var dateYr: String = Calendar.getInstance(Locale.CANADA).get(Calendar.YEAR).toString()
+    var dateMth: String = Calendar.getInstance(Locale.CANADA).get(Calendar.MONTH).toString()
+    var dateDay: String = Calendar.getInstance(Locale.CANADA).get(Calendar.DATE).toString()
+    var date: String = dateYr.substring(3, 4) + dateMth + dateDay
+    itemFeatures.add(1, date)
 
-    var count:Int = 0 //will increment automatically
-    var itemID:String = ctgr.substring(1,3).toUpperCase() + subctgr.substring(1,3).toUpperCase() + date + count.toString() //auto generate and convert "count"
-    itemFeatures.add(1,itemID)
+    var count = 0 //will increment automatically
+    var itemID: String = ctgr.substring(1, 3).toUpperCase() + subctgr.substring(1, 3).toUpperCase() + date + count.toString() //auto generate and convert "count"
+    itemFeatures.add(1, itemID)
 
     //app display
-    if (verCtgr ) {
-        println("ID: " + itemFeatures.get(1))
-        println("In the day: " + itemFeatures.get(2))
-        println("Name: " + itemFeatures.get(3))
-        println("In ctgr: " + itemFeatures.get(4) + " - sub: " + itemFeatures.get(5))
-        println("Amount expense: " + itemFeatures.get(6))
-
+    if (verCtgr) {
+        var data = item(itemFeatures[1], itemFeatures[2], itemFeatures[3], itemFeatures[4], itemFeatures[5], itemFeatures[6])
         ++count //count = count + 1 similar to count++
     } else {
         println("Please check your input in Subcategory field again!")
